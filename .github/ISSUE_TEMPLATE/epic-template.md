@@ -1,26 +1,34 @@
 ---
 name: Epic template
-about: Describe this issue template's purpose here.
+about: If you want to create new epic, Describe it in this template
 title: ''
 labels: ''
 assignees: ''
 
 ---
+---
+---
+---
+### Epic Info
+- Person in charge : 
+- Definition :  
+- Timeline : 
 
-## Description
-- Brief summary of what this Epic is, whether it's a larger project, goal, or user story. Describe the job to be done, which persona this Epic is mainly for, or if more multiple, break it down by user and job story.
+---
+### Description
 
-## Initiative / goal
-- Describe how this Epic impacts an initiative the business is working on.
+1. Summary  
+이 Epic이 무엇인지 간략하게 설명합니다. 만약 필요하다면 해당 epic을 생성한 story, 계기, 이유 등을 서술합니다.  
 
-## Hypothesis
-- What is your hypothesis on the success of this Epic? Describe how success will be measured and what leading indicators the team will have to know if success has been hit.
+2. Outcomes  
+이 에픽을 통해 나타내고자 하는 결과를 간단히 설명합니다. 첨부할 설계/구조 혹은 예상 결과물이 있으면 첨부해도 좋습니다.
 
-## Acceptance criteria and must have scope
-- Define what is a must-have for launch and in-scope. Keep this section fluid and dynamic until you lock-in priority during planning.
+---
+### Measure
+1. Goal/Acceptance criteria  
+해당 에픽이 성취해야할 목표 혹은 성공했다고 수용할 수 있는 기준을 서술하십시오.  
 
-## Stakeholders
-- Describe who needs to be kept up-to-date about this Epic, included in discussions, or updated along the way. Stakeholders can be both in Product/Engineering, as well as other teams like Customer Success who might want to keep customers updated on the Epic project.
+2. Hypothesis  
+해당 에픽이 성공적으로 위의 목표를 달성하기 위한 대한 당신의 가설은 무엇입니까? 성공 여부를 측정하는 방법과 성공 여부를 팀이 알아야 할 선행 지표에 대해 설명합니다.
 
-## Timeline
-- What's the timeline for this Epic, what resources are needed, and what might potentially block this from hitting the projected end date.
+---
