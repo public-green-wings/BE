@@ -15,7 +15,7 @@ class ChatNamespace(Namespace):
         print("Client disconnected", )
         #sessioned = session.get()
 
-    def on_set_user_id(self,data):
+    def on_set_user_id(self):
         self.user_id = UserModel.find_by_id(data['serial_number']).id
 
     def on_message(self,data):
