@@ -1,4 +1,5 @@
-from packages.k_doll_ai_chatbot.transformer_models.aimodel import AIModel
+from packages.pue_chatbot.transformer_models.aimodel import AIModel
+from app import bcrypt
 
 main_ai = AIModel()
 main_ai.model_loader()

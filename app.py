@@ -4,13 +4,12 @@ from flask_jwt_extended import JWTManager
 from flask_socketio import SocketIO
 from resources import create_api, create_socketio
 from resources.config.configure import config
+from flask_bcrypt import Bcrypt
 
 from db import db
 
 #SECRET_KEY = config['DEFAULT']['SECRET_KEY']
 #db_name = config['DEFAULT']['DB_NAME']+'.db'
-
-
 
 SECRET_KEY = "chan"
 db_name="chatbot"
@@ -32,7 +31,10 @@ sock = SocketIO(app)
 #this will be used for login(authenticate users)
 jwt = JWTManager(app) #this will make endpoint named '/auth' (username,password)
 #JWT will be made based on what authenticate returns(user) and JWT will be sent to identity to identify which user has Vaild JWT
+bcrypt = Bcrypt(app)
 
+create_api(api)
+create_socketio(sock)
 #API works with resouce
 #200 ok
 #201 created
@@ -46,36 +48,32 @@ jwt = JWTManager(app) #this will make endpoint named '/auth' (username,password)
 #         return {'is_admin': True}
 #     return {'is_admin': False}
 #
-# @jwt.invalid_token_loader
-# def invalid_token_callback(error):  # we have to keep the argument here, since it's passed in by the caller internally
-#     return jsonify({
-#         'message': 'Signature verification failed.',
-#         'error': 'invalid_token'
-#     }), 401
-#
-# @jwt.unauthorized_loader
-# def missing_token_callback(error):
-#     return jsonify({
-#         "description": "Request does not contain an access token.",
-#         'error': 'authorization_required'
-#     }), 401
-#
-# @jwt.revoked_token_loader
-# def revoked_token_callback():
-#     return jsonify({
-#         "description": "The token has been revoked.",
-#         'error': 'token_revoked'
-#     }), 401
-create_api(api)
-create_socketio(sock)
+@jwt.invalid_token_loader
+def invalid_token_callback(error):  # we have to keep the argument here, since it's passed in by the caller internally
+    return jsonify({
+        'message': 'Signature verification failed.',
+        'error': 'invalid_token'
+    }), 401
+
+@jwt.unauthorized_loader
+def missing_token_callback(error):
+    return jsonify({
+        "description": "Request does not contain an access token.",
+        'error': 'authorization_required'
+    }), 401
+
+@jwt.revoked_token_loader
+def revoked_token_callback():
+    return jsonify({
+        "description": "The token has been revoked.",
+        'error': 'token_revoked'
+    }), 401
+
+
 
 @app.before_first_request
 def create_tables():
     db.create_all()
-
-
-
-
 
 if __name__ == "__main__":
 
