@@ -7,6 +7,7 @@ from flask_jwt_extended import (
     jwt_required
 )
 from models.user import UserModel
+from resources import bcrypt
 
 _user_parser = reqparse.RequestParser()
 _user_parser.add_argument('username',
@@ -42,10 +43,11 @@ class UserRegister(Resource):
     def post(self):
         data = UserRegister._user_parser.parse_args()
 
-        if UserModel.find_by_username(data['username']):
+        if UserModel.find_by_username(data['user_name']):
             return {"message": "A user with that email already exists"}, 400
 
-        user = UserModel(**data)
+        pwd = bcrypt.generate_password_hash(data['password'])
+        user = UserModel(data['username'],data['user_subname'],pwd)
         user.save_to_db()
         return {"message": "User created successfully."}, 201
 
@@ -60,7 +62,7 @@ class User(Resource):
         user_id = get_jwt_identity()
         user = UserModel.find_by_id(user_id)
         if not user:
-            return {'message': f"User's id with {user_id} Cannot Found"}, 404
+            return {'message': f"User's id with {user_id} cannot Find"}, 404
         return user.json(), 200
 
     @jwt_required
@@ -91,7 +93,7 @@ class UserLogin(Resource):
         user = UserModel.find_by_username(data['username'])
 
         # this is what the `authenticate()` function did in security.py
-        if user and compare_digest(user.password, data['password']):
+        if user and bcrypt.check_password_hash(user.password, data['password']):
             # identity= is what the identity() function did in security.py—now stored in the JWT
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
