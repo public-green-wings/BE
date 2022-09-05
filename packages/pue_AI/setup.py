@@ -33,7 +33,14 @@ def download_weights():
         NER_flag = not loaded["NER-weights-version"] == NER_version
         GD_flag = not loaded['GD-weights-version'] == GD_version
 
+
+
+
     weight_path = this_dir.replace("\\","/") + "/resources/weights"
+
+    if not os.path.exists(weight_path+"/Emo_weights") :
+        os.makedirs(weight_path+"/Emo_weights")
+
     if not os.path.isfile(weight_path+"/Emo_weights/Emo_weights.index") or Emo_flag:
         print("Downloading Emo pretrained index...")
         output = weight_path+"/Emo_weights/Emo_weights.index"
@@ -48,6 +55,9 @@ def download_weights():
         print("Downloading Emo pretrained weights...")
         output = weight_path+"/Emo_weights/Emo_weights.data-00000-of-00001"
         gdown.download(loaded["EMO-data-url"], output, quiet=False)
+
+    if not os.path.exists(weight_path + "/NER_weights"):
+        os.makedirs(weight_path + "/NER_weights")
 
     if not os.path.isfile(weight_path+"/NER_weights/NER_weights.index") or NER_flag:
         print("Downloading NER pretrained index...")
@@ -64,6 +74,9 @@ def download_weights():
         output = weight_path+"/NER_weights/NER_weights.data-00000-of-00001"
         gdown.download(loaded["NER-data-url"], output, quiet=False)
 
+    if not os.path.exists(weight_path + "/GD_weights"):
+        os.makedirs(weight_path + "/GD_weights")
+    
     if not os.path.isfile(weight_path+"/GD_weights/GD_weights.h5") or GD_flag:
         print("Downloading Transformer pretrained index...")
         output = weight_path+"/GD_weights/GD_weights.h5"
