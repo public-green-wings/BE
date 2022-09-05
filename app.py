@@ -11,7 +11,7 @@ from flask_cors import CORS
 from db import db
 
 
-host = "127.0.0.1"
+host = "192.168.0.102"
 port = 5001
 #SECRET_KEY = config['DEFAULT']['SECRET_KEY']
 #db_name = config['DEFAULT']['DB_NAME']+'.db'

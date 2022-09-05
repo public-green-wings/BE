@@ -1,4 +1,4 @@
-from packages.pue_ai.aimodel import AIModel
+from packages.pue_AI.aimodel import AIModel
 
 main_ai = AIModel()
 main_ai.model_loader()
