@@ -34,7 +34,7 @@ class UserRegister(Resource):
         if UserModel.find_by_username(data['user_name']):
             return {"message": "A user with that email already exists"}, 400
 
-       #pwd = bcrypt.generate_password_hash(data['password'])
+
         user = UserModel(data['user_name'],data['user_subname'],data['password'])
         user.save_to_db()
         return {"message": "User created successfully."}, 201
@@ -83,7 +83,7 @@ class UserLogin(Resource):
         user = UserModel.find_by_username(data['user_name'])
 
         # this is what the `authenticate()` function did in security.py
-        if user and compare_digest(user.password, data['password']):
+        if user and bcrypt.check_password_hash(user.password, data['password']):
             # identity= is what the identity() function did in security.py—now stored in the JWT
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)

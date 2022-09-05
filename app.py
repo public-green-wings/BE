@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from resources import create_api, create_socketio
 from flask_cors import CORS
 
+
 from db import db
 
 
@@ -37,20 +38,10 @@ jwt = JWTManager(app) #this will make endpoint named '/auth' (username,password)
 #JWT will be made based on what authenticate returns(user) and JWT will be sent to identity to identify which user has Vaild JWT
 bcrypt = Bcrypt(app)
 
-# create_socketio(sock)
-#API works with resouce
-#200 ok
-#201 created
-#202 accepted
-#400 Bad request
-#404 NotFounded
-#
-# @jwt.user_claims_loader
-# def add_claims_to_jwt(identity):  # Remember identity is what we define when creating the access token
-#     if identity == 1:   # instead of hard-coding, we should read from a config file or database to get a list of admins instead
-#         return {'is_admin': True}
-#     return {'is_admin': False}
-#
+
+create_api(api)
+create_socketio(sock)
+
 @jwt.invalid_token_loader
 def invalid_token_callback(error):  # we have to keep the argument here, since it's passed in by the caller internally
     return jsonify({
@@ -72,12 +63,19 @@ def revoked_token_callback():
         'error': 'token_revoked'
     }), 401
 
+
+@jwt.unauthorized_loader
+def missing_token_callback(error):
+    return jsonify({
+        "description": "Request does not contain an access token.",
+        'error': 'authorization_required'
+    }), 401
+
+
 @app.before_first_request
 def create_tables():
     db.create_all()
 
-create_api(api)
-create_socketio(sock)
 
 if __name__ == "__main__":
 
