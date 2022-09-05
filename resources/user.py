@@ -7,19 +7,6 @@ from flask_jwt_extended import (
     jwt_required
 )
 from models.user import UserModel
-from resources import bcrypt
-
-_user_parser = reqparse.RequestParser()
-_user_parser.add_argument('username',
-                          type=str,
-                          required=True,
-                          help="This field cannot be blank."
-                          )
-_user_parser.add_argument('password',
-                          type=str,
-                          required=True,
-                          help="This field cannot be blank."
-                          )
 
 class UserRegister(Resource):
     _user_parser = reqparse.RequestParser()
@@ -40,14 +27,15 @@ class UserRegister(Resource):
                               help="Field named 'password' cannot be blank."
                               )
 
+
     def post(self):
         data = UserRegister._user_parser.parse_args()
 
         if UserModel.find_by_username(data['user_name']):
             return {"message": "A user with that email already exists"}, 400
 
-        pwd = bcrypt.generate_password_hash(data['password'])
-        user = UserModel(data['username'],data['user_subname'],pwd)
+
+        user = UserModel(data['user_name'],data['user_subname'],data['password'])
         user.save_to_db()
         return {"message": "User created successfully."}, 201
 
@@ -57,7 +45,8 @@ class User(Resource):
     This resource can be useful when testing our Flask app. We may not want to expose it to public users, but for the
     sake of demonstration in this course, it can be useful when we are manipulating data regarding the users.
     """
-    @jwt_required
+
+    @jwt_required()
     def get(self):
         user_id = get_jwt_identity()
         user = UserModel.find_by_id(user_id)
@@ -65,10 +54,11 @@ class User(Resource):
             return {'message': f"User's id with {user_id} cannot Find"}, 404
         return user.json(), 200
 
-    @jwt_required
+    @jwt_required()
     def delete(cls):
         user_id = get_jwt_identity()
-        user = UserModel.find_by_username(user_id)
+        user = UserModel.find_by_id(user_id)
+
         if not user:
             return {'message': 'User Not Found'}, 404
         user.delete_from_db()
@@ -77,7 +67,7 @@ class User(Resource):
 
 class UserLogin(Resource):
     _user_parser = reqparse.RequestParser()
-    _user_parser.add_argument('username',
+    _user_parser.add_argument('user_name',
                               type=str,
                               required=True,
                               help="Field named 'username' cannot be blank."
@@ -90,7 +80,7 @@ class UserLogin(Resource):
     def post(self):
         data = UserLogin._user_parser.parse_args()
 
-        user = UserModel.find_by_username(data['username'])
+        user = UserModel.find_by_username(data['user_name'])
 
         # this is what the `authenticate()` function did in security.py
         if user and bcrypt.check_password_hash(user.password, data['password']):
