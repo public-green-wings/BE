@@ -1,2 +1,2 @@
 from sqlalchemy import and_
-__all__ = ["chat","statistic","user"]
+__all__ = ["user"]
