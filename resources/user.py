@@ -83,7 +83,7 @@ class UserLogin(Resource):
         user = UserModel.find_by_username(data['user_name'])
 
         # this is what the `authenticate()` function did in security.py
-        if user and bcrypt.check_password_hash(user.password, data['password']):
+        if user and (user.password == data['password']):
             # identity= is what the identity() function did in security.py—now stored in the JWT
             access_token = create_access_token(identity=user.id, fresh=True)
             refresh_token = create_refresh_token(user.id)
