@@ -37,7 +37,7 @@ jwt = JWTManager(app) #this will make endpoint named '/auth' (username,password)
 #JWT will be made based on what authenticate returns(user) and JWT will be sent to identity to identify which user has Vaild JWT
 
 create_api(api)
-create_socketio(sock)
+#create_socketio(sock)
 
 # @jwt.invalid_token_loader
 # def invalid_token_callback(error):  # we have to keep the argument here, since it's passed in by the caller internally
@@ -78,7 +78,5 @@ if __name__ == "__main__":
 
     db.init_app(app)
     print("Now we Run...")
-
-
-
-    sock.run(app,host=host,port=port,debug=False)
+    app.run(host=host,port=port,debug=False)
+    # sock.run(app,host=host,port=port,debug=False)
