@@ -20,5 +20,5 @@ class ChatNamespace(Namespace):
 
         while True:
             eventlet.sleep(3)
-            x,y,z=input("(x,y,z)=?: ").split()
-            emit("RES_MESSAGE", {"x": x, "y": y, 'z': z})
+            x,y,z = input("(x,y,z)=?: ").split()
+            emit("RES_MESSAGE", {"x": int(x), "y": int(y), 'z': int(z)})
