@@ -7,7 +7,7 @@ def create_api(api):
     api.add_resource(UserLogin, '/login')
 
 def create_socketio(sock):
-    from .chatnamespace import ChatNamespace
-    sock.on_namespace(ChatNamespace('/realchat'))
+    from .ws_ns import ChatNamespace
+    sock.on_namespace(ChatNamespace('/realtime'))
 
 
