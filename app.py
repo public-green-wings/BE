@@ -9,8 +9,7 @@ from flask_cors import CORS
 
 from db import db
 
-
-host = "127.0.0.1"
+host = "0.0.0.0"
 port = 5001
 #SECRET_KEY = config['DEFAULT']['SECRET_KEY']
 #db_name = config['DEFAULT']['DB_NAME']+'.db'
@@ -30,6 +29,7 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = "chan"
 api = Api(app) #API FLASK SERVER
 
+CORS(app)
 sock = SocketIO(app,cors_allowed_origins="*")
 
 #this will be used for login(authenticate users)
@@ -37,7 +37,7 @@ jwt = JWTManager(app) #this will make endpoint named '/auth' (username,password)
 #JWT will be made based on what authenticate returns(user) and JWT will be sent to identity to identify which user has Vaild JWT
 
 create_api(api)
-#create_socketio(sock)
+create_socketio(sock)
 
 # @jwt.invalid_token_loader
 # def invalid_token_callback(error):  # we have to keep the argument here, since it's passed in by the caller internally
@@ -78,5 +78,5 @@ if __name__ == "__main__":
 
     db.init_app(app)
     print("Now we Run...")
-    app.run(host=host,port=port,debug=False)
-    # sock.run(app,host=host,port=port,debug=False)
+    #app.run(host=host,port=port,debug=False)
+    sock.run(app,host=host,port=port,debug=False)
