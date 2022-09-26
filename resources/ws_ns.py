@@ -17,6 +17,10 @@ class ChatNamespace(Namespace):
         #sessioned = session.get()
 
     def on_REQ_MESSAGE(self):
-
-        x,y,z = input("(lat,long,alt)=?: ").split()
-        emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
+        while 1:
+            try:
+                x,y,z = input("(lat,long,alt)=?: ").split()
+                emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
+                break
+            except :
+                continue
