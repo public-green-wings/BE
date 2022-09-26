@@ -18,7 +18,5 @@ class ChatNamespace(Namespace):
 
     def on_REQ_MESSAGE(self):
 
-        while True:
-            eventlet.sleep(3)
-            x,y,z = input("(lat,long,alt)=?: ").split()
-            emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
+        x,y,z = input("(lat,long,alt)=?: ").split()
+        emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
