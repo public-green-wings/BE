@@ -16,11 +16,34 @@ class ChatNamespace(Namespace):
         print("Client disconnected", )
         #sessioned = session.get()
 
+    def IMG_MESSAGE(self,data):
+        """send data to other client!"""
+        #img = numpy.fromstring(data,np.int8)
+
+        print(data)
+
     def on_REQ_MESSAGE(self):
-        while 1:
-            try:
-                x,y,z = input("(lat,long,alt)=?: ").split()
-                emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
-                break
-            except :
-                continue
+
+        a= int(input("0:local 1:global"))
+
+        if a == 1 :
+            while 1:
+                try:
+                    x, y, z = input("(lat,long,alt)=?: ").split()
+                    emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
+                    eventlet.sleep(0)
+                except Exception as e:
+                    print(e)
+                    continue
+        else :
+            while 1:
+                try:
+                    x, y, z = input("(x,y,z)=?: ").split()
+                    emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
+                    eventlet.sleep(0)
+                except Exception as e:
+                    print(e)
+                    continue
+
+
+
