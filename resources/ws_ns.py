@@ -22,30 +22,12 @@ class ChatNamespace(Namespace):
 
         print(data)
 
-    def on_REQ_MESSAGE(self):
+    def on_REQ_MESSAGE(self,data):
 
-        a= int(input("0:local 1:global"))
+        x, y, z = input("(lat(x),long(y),alt(z))=?: ").split()
+        emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
+        eventlet.sleep(3)
 
-        if a == 1 :
-            while 1:
-                try:
-                    x, y, z = input("(lat,long,alt)=?: ").split()
-                    emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
-                    eventlet.sleep(3)
-
-                except Exception as e:
-                    print(e)
-                    continue
-        else :
-            while 1:
-                try:
-                    x, y, z = input("(x,y,z)=?: ").split()
-                    emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
-                    eventlet.sleep(3)
-
-                except Exception as e:
-                    print(e)
-                    continue
 
 
 
