@@ -31,8 +31,8 @@ class ChatNamespace(Namespace):
                 try:
                     x, y, z = input("(lat,long,alt)=?: ").split()
                     emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
-                    eventlet.sleep(0)
-                    break
+                    eventlet.sleep(3)
+
                 except Exception as e:
                     print(e)
                     continue
@@ -41,8 +41,8 @@ class ChatNamespace(Namespace):
                 try:
                     x, y, z = input("(x,y,z)=?: ").split()
                     emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
-                    eventlet.sleep(0)
-                    break
+                    eventlet.sleep(3)
+
                 except Exception as e:
                     print(e)
                     continue
