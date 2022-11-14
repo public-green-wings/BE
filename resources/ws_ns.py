@@ -22,7 +22,7 @@ class ChatNamespace(Namespace):
 
         print(data)
 
-    def on_REQ_MESSAGE(self,data):
+    def on_REQ_MESSAGE(self):
 
         x, y, z = input("(lat(x),long(y),alt(z))=?: ").split()
         emit("RES_MESSAGE", {"lat": float(x), "long": float(y), 'alt': float(z)})
