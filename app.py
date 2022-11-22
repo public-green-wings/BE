@@ -1,9 +1,6 @@
-from flask import Flask, jsonify
+from flask import Flask
 from flask_restful import Api
-from flask_jwt_extended import JWTManager
 from flask_socketio import SocketIO
-from models import *
-from flask_bcrypt import Bcrypt
 from resources import create_api, create_socketio
 from flask_cors import CORS
 
@@ -15,7 +12,7 @@ port = 5001
 #db_name = config['DEFAULT']['DB_NAME']+'.db'
 
 SECRET_KEY = "chan"
-db_name="drone"
+db_name = "drone"
 #SETUP
 #1. virtualenv venv --python=python3.8
 #2. Flask-RESTful
@@ -27,13 +24,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+db_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.secret_key = "chan"
+
 api = Api(app) #API FLASK SERVER
 
 CORS(app)
+
 sock = SocketIO(app,cors_allowed_origins="*")
 
 #this will be used for login(authenticate users)
-jwt = JWTManager(app) #this will make endpoint named '/auth' (username,password)
+#jwt = JWTManager(app) #this will make endpoint named '/auth' (username,password)
 #JWT will be made based on what authenticate returns(user) and JWT will be sent to identity to identify which user has Vaild JWT
 
 create_api(api)

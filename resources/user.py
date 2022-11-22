@@ -1,5 +1,4 @@
 from flask_restful import Resource, reqparse
-from hmac import compare_digest
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
@@ -46,15 +45,13 @@ class User(Resource):
     sake of demonstration in this course, it can be useful when we are manipulating data regarding the users.
     """
 
-    @jwt_required()
     def get(self):
-        user_id = get_jwt_identity()
+        user_id=1
         user = UserModel.find_by_id(user_id)
         if not user:
             return {'message': f"User's id with {user_id} cannot Find"}, 404
         return user.json(), 200
 
-    @jwt_required()
     def delete(cls):
         user_id = get_jwt_identity()
         user = UserModel.find_by_id(user_id)
