@@ -35,6 +35,7 @@ class ChatNamespace(Namespace):
             rooms["USER"] = request.sid
 
     def on_CUR_POS(self,data):
+        print("Recevied",data)
         emit("REV_POS",data,to=rooms["USER"])
 
     def on_PUB_POS(self,data):
