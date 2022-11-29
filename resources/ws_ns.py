@@ -43,6 +43,10 @@ class ChatNamespace(Namespace):
         emit("REQ_POS", {"lat": float(data["x"]), "long": float(data["y"]), 'alt': float(data["z"])},to=rooms["DRONE"])
         eventlet.sleep(3)
 
+    def on_PUB_ALT(self,data):
+        emit("REQ_ALT", {'alt': float(data["z"])},to=rooms["DRONE"])
+        eventlet.sleep(3)
+
 
 
 
